@@ -22,7 +22,10 @@ async function build() {
   await execa(
     'docker',
     [
+      'buildx',
       'build',
+      '--platform',
+      'linux/amd64,linux/arm64',
       '-t',
       `${DOCKER_IMAGE_NAME}:${version}`,
       '-t',
@@ -30,6 +33,7 @@ async function build() {
       '--build-arg',
       `VERSION=${version}`,
       './docker/images/studio',
+      '--push',
     ],
     {
       stdio: 'inherit',
